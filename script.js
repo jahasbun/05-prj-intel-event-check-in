@@ -21,11 +21,6 @@ let attendanceData = {
   attendees: []
 };
 
-const savedAttendanceData = localStorage.getItem(storageKey);
-if (savedAttendanceData) {
-  attendanceData = JSON.parse(savedAttendanceData);
-}
-
 function updateAttendanceDisplay() {
   attendeeCountDisplay.textContent = attendanceData.attendeeCount;
   progressBar.style.width = `${Math.min((attendanceData.attendeeCount / maxAttendees) * 100, 100)}%`;
@@ -71,8 +66,6 @@ function updateAttendanceDisplay() {
   }
 }
 
-updateAttendanceDisplay();
-
 checkInForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -87,13 +80,31 @@ checkInForm.addEventListener("submit", function (event) {
     name: attendeeName,
     team: selectedTeam
   });
-  localStorage.setItem(storageKey, JSON.stringify(attendanceData));
-
   updateAttendanceDisplay();
 
   greeting.textContent = `Welcome, ${attendeeName}! You are checked in with ${teamName}.`;
   greeting.classList.add("success-message");
   greeting.style.display = "block";
 
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(attendanceData));
+  } catch (error) {
+    console.error("Unable to save attendance data:", error);
+    greeting.textContent += " This check-in could not be saved in this browser.";
+  }
+
   checkInForm.reset();
 });
+
+try {
+  const savedAttendanceData = localStorage.getItem(storageKey);
+  if (savedAttendanceData) {
+    attendanceData = JSON.parse(savedAttendanceData);
+  }
+} catch (error) {
+  console.error("Unable to load saved attendance data:", error);
+  greeting.textContent = "Saved attendance could not be loaded. New check-ins may not persist.";
+  greeting.style.display = "block";
+}
+
+updateAttendanceDisplay();
