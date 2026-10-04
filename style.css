@@ -348,6 +348,51 @@ select {
   color: #475569;
 }
 
+.celebration {
+  display: none;
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #fff7ed;
+  color: #9a3412;
+  font-size: 18px;
+}
+
+.celebration strong {
+  color: #c2410c;
+}
+
+.attendee-list {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.attendee-list h3 {
+  margin-bottom: 12px;
+  color: #64748b;
+}
+
+.attendee-list ul {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+}
+
+.attendee-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  color: #475569;
+}
+
+.attendee-list li span:last-child {
+  color: #0071c5;
+  text-align: right;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .hero {
